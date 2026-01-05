@@ -1,5 +1,7 @@
 #include "utility.h"
 
+inline constexpr float PI = 3.1415926535897932384626433832795;
+
 Vec2 equirectangularUV(const Vec3& dir)
 {
     float phi = atan2(dir.x, dir.z);
