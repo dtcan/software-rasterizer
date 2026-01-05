@@ -1,3 +1,11 @@
+A fork of [nikolausrauch/software-rasterizer](https://github.com/nikolausrauch/software-rasterizer)
+with all dependencies and examples removed. The purpose of this fork is to be used as a dependency
+in my game engine, [davi](https://github.com/dtcan/davi).
+
+Below is the original contents of README.md:
+
+---
+
 # CPU Software Rasterizer
 
 A software-rasterizer in C++, that I wrote to get a basic understanding of the OpenGL graphics pipeline.
