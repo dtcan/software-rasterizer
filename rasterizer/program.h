@@ -34,7 +34,7 @@ private:
     FragmentShader m_fragShader;
     Uniforms m_uniforms;
 
-    friend struct Renderer;
+    friend struct Rasterizer;
 };
 
 }

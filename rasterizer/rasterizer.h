@@ -15,7 +15,7 @@
 namespace software_rasterizer
 {
 
-struct Renderer
+struct Rasterizer
 {
     /* rasterizer options */
     struct Options
@@ -26,7 +26,7 @@ struct Renderer
     };
 
 
-    Renderer(unsigned int width, unsigned int height);
+    Rasterizer(unsigned int width, unsigned int height);
 
     DefaultFramebuffer& framebuffer();
     Options& options();
