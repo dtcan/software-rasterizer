@@ -43,36 +43,6 @@ add_compile_options("$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:${MSVC_C
 
 
 #########################################
-#        Build External-Libraries       #
-#########################################
-set( OpenGL_GL_PREFERENCE GLVND )
-find_package( OpenGL 3.0 REQUIRED )
-
-add_subdirectory(external/glad)
-target_compile_options(glad_static PRIVATE "$<$<CXX_COMPILER_ID:GNU>:${GCC_COMPILE_SUPPRESS_WARING}>")
-target_include_directories( glad_static PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include>
-    )
-
-add_subdirectory(external/glfw)
-target_compile_options(glfw PRIVATE "$<$<CXX_COMPILER_ID:GNU>:${GCC_COMPILE_SUPPRESS_WARING}>")
-target_include_directories( glfw PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/external/glfw/include>
-    )
-
-add_subdirectory(external/stb_image)
-target_compile_options(stb_image PRIVATE "$<$<CXX_COMPILER_ID:GNU>:${GCC_COMPILE_SUPPRESS_WARING}>")
-
-add_subdirectory(external/tiny_obj_loader)
-target_compile_options(tiny_obj PRIVATE "$<$<CXX_COMPILER_ID:GNU>:${GCC_COMPILE_SUPPRESS_WARING}>")
-
-
-#########################################
 #        Build Software Rasterizer      #
 #########################################
 add_subdirectory(rasterizer)
-
-#########################################
-#           Build Examples              #
-#########################################
-add_subdirectory(apps)

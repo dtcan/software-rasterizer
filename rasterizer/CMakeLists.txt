@@ -11,7 +11,6 @@ project( rasterizer )
 #################################
 set( SRC
     "${CMAKE_CURRENT_SOURCE_DIR}/renderer.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/texture.cpp"
 
     "${CMAKE_CURRENT_SOURCE_DIR}/math/utility.cpp"
     )
@@ -49,8 +48,6 @@ source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR}
 #       Build Viewer Library    #
 #################################
 add_library( rasterizer_static STATIC ${RASTERIZER_SRC} ${RASTERIZER_HDR} )
-
-target_link_libraries( rasterizer_static PUBLIC stb_image )
 
 target_include_directories( rasterizer_static PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/>
