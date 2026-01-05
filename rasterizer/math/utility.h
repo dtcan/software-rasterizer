@@ -4,6 +4,9 @@
 #include "vector3.h"
 #include "vector4.h"
 
+namespace software_rasterizer::math
+{
+
 Vec2 equirectangularUV(const Vec3& dir);
 Vec3 equirectangulatDir(Vec2 pixel, Vec2i size);
 
@@ -44,4 +47,6 @@ Vec3 barycentric(const Vector3<T>& a, const Vector3<T>& b, const Vector3<T>& c, 
     float u = 1.0f - v - w;
 
     return {u, v, w};
+}
+
 }

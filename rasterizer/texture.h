@@ -8,6 +8,9 @@
 #include <string>
 #include <cassert>
 
+namespace software_rasterizer
+{
+
 template<typename T>
 struct Texture;
 
@@ -146,6 +149,8 @@ private:
     std::vector<TextureStorage<T>> m_mipmaps;
 };
 
-typedef Vector4<std::uint8_t> RGBA8;
-typedef Vector4<float> RGBAF;
+typedef math::Vector4<std::uint8_t> RGBA8;
+typedef math::Vector4<float> RGBAF;
 typedef float Depth;
+
+}

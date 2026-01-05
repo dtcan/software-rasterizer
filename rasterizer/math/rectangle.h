@@ -2,6 +2,9 @@
 
 #include "vector2.h"
 
+namespace software_rasterizer::math
+{
+
 template<typename T>
 struct Rectangle
 {
@@ -77,3 +80,5 @@ Vector2<T> clamp(const Rectangle<T>& border, const Vector2<T>& point, T pad_min 
 
 typedef Rectangle<int> Recti;
 typedef Rectangle<float> Rectf;
+
+}

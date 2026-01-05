@@ -8,6 +8,9 @@
 
 #include <functional>
 
+namespace software_rasterizer
+{
+
 template<typename Vertex, typename Varying, typename Uniforms, typename FrameTargets = DefaultFramebuffer>
 struct Program
 {
@@ -18,7 +21,7 @@ struct Program
     using VertexShader = std::function< void (const Uniforms& uniforms, const Vertex& in, Varying& out) >;
 
     using FragmentShader = std::conditional_t<std::is_same_v<DefaultFramebuffer, FrameTargets>,
-    std::function< void (const Uniforms& uniforms, const Varying& in, Vec4& out) >,
+    std::function< void (const Uniforms& uniforms, const Varying& in, math::Vec4& out) >,
     std::function< void (const Uniforms& uniforms, const Varying& in, typename FrameTargets::TargetFragments& out) >>;
 
 
@@ -33,3 +36,5 @@ private:
 
     friend struct Renderer;
 };
+
+}

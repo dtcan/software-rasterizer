@@ -5,6 +5,9 @@
 #include <iostream>
 #include <iomanip>
 
+namespace software_rasterizer::math
+{
+
 template<typename T> struct Vector4;
 
 template<typename T>
@@ -301,3 +304,4 @@ typedef Vector3<int> Vec3i;
 typedef Vector3<float> Vec3;
 typedef Vector3<std::uint8_t> Vec3u_8;
 
+}

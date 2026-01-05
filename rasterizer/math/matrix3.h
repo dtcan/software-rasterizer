@@ -2,6 +2,9 @@
 
 #include "vector3.h"
 
+namespace software_rasterizer::math
+{
+
 template<typename U> struct Matrix4;
 
 template<typename T>
@@ -236,3 +239,5 @@ Matrix3<T> inverse(const Matrix3<T>& M)
 
 typedef Matrix3<int> Mat3i;
 typedef Matrix3<float> Mat3;
+
+}

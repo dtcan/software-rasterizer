@@ -1,6 +1,6 @@
 #pragma once
 
-namespace detail
+namespace software_rasterizer::detail
 {
 
 template<typename T>

@@ -1,5 +1,8 @@
 #include "renderer.h"
 
+namespace software_rasterizer
+{
+
 Renderer::Renderer(unsigned int width, unsigned int height)
     : m_framebuffer(width, height),
       m_options{ {0, 0, static_cast<float>(width), static_cast<float>(height)}, true, false }
@@ -15,4 +18,6 @@ DefaultFramebuffer &Renderer::framebuffer()
 Renderer::Options& Renderer::options()
 {
     return m_options;
+}
+
 }

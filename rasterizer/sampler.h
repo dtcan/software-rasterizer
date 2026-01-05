@@ -4,8 +4,11 @@
 
 #include <algorithm>
 
+namespace software_rasterizer
+{
+
 template<typename T> struct Sampler;
-template<typename T> T texture(const Sampler<T>& sampler, const Vec2& uv);
+template<typename T> T texture(const Sampler<T>& sampler, const math::Vec2& uv);
 
 
 enum class eFilter
@@ -53,7 +56,7 @@ public:
 };
 
 template<typename T>
-T sample_texture(const TextureStorage<T>& textureStorage, const Vec2& uv, eWrap wrap, eFilter filter)
+T sample_texture(const TextureStorage<T>& textureStorage, const math::Vec2& uv, eWrap wrap, eFilter filter)
 {
     /* map based on wrap option to new uv coordinates */
     auto proj_uv = uv;
@@ -106,14 +109,14 @@ T sample_texture(const TextureStorage<T>& textureStorage, const Vec2& uv, eWrap 
 }
 
 template<typename T>
-T texture(const Sampler<T>& sampler, const Vec2& uv)
+T texture(const Sampler<T>& sampler, const math::Vec2& uv)
 {
     assert(sampler.m_texture != nullptr);
     return sample_texture(sampler.m_texture->mipmaps().front(), uv, sampler.wrap, sampler.filter);
 }
 
 template<typename T>
-T textureLod(const Sampler<T>& sampler, const Vec2& uv, float level)
+T textureLod(const Sampler<T>& sampler, const math::Vec2& uv, float level)
 {
     float sample_level = std::clamp(level, 0.0f, static_cast<float>(sampler.m_texture->num_mipmaps() - 1));
     if(sampler.filter == eFilter::NEAREST || sampler.filter == eFilter::NEAREST_MIPMAP_LINEAR)
@@ -134,13 +137,15 @@ T textureLod(const Sampler<T>& sampler, const Vec2& uv, float level)
 }
 
 template<typename T>
-Vec2i textureSize( const Sampler<T>& sampler )
+math::Vec2i textureSize( const Sampler<T>& sampler )
 {
     return Vec2i( sampler.m_texture->width(), sampler.m_texture->height() );
 }
 
 template<typename T>
-Vec2 textureInvSize( const Sampler<T>& sampler )
+math::Vec2 textureInvSize( const Sampler<T>& sampler )
 {
     return Vec2( 1.0f / sampler.m_texture->width(), 1.0f / sampler.m_texture->height() );
+}
+
 }

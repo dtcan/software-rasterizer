@@ -6,6 +6,8 @@
 
 #include <tuple>
 
+namespace software_rasterizer
+{
 
 template<typename... Targets>
 struct Framebuffer
@@ -68,7 +70,7 @@ struct Framebuffer
         }, m_targets);
     }
 
-    void clear(const Vec4& color)
+    void clear(const math::Vec4& color)
     {
         clear(RGBA8(color * 255));
     }
@@ -85,3 +87,5 @@ private:
 };
 
 using DefaultFramebuffer = Framebuffer<RGBA8, Depth>;
+
+}

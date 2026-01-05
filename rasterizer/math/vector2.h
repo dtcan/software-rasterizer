@@ -4,6 +4,9 @@
 #include <cassert>
 #include <iostream>
 
+namespace software_rasterizer::math
+{
+
 template<typename T> struct Vector4;
 template<typename T> struct Vector3;
 
@@ -280,3 +283,5 @@ auto max(const Vector2<T>& a, const Vector2<T>& b)
 typedef Vector2<int> Vec2i;
 typedef Vector2<float> Vec2;
 typedef Vector2<std::uint8_t> Vec2u_8;
+
+}

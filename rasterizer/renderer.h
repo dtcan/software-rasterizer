@@ -12,12 +12,15 @@
 
 #include <cassert>
 
+namespace software_rasterizer
+{
+
 struct Renderer
 {
     /* rasterizer options */
     struct Options
     {
-        Rectf viewport;
+        math::Rectf viewport;
         bool culling;
         bool wireframe;
     };
@@ -165,19 +168,19 @@ private:
     {
         if(options.culling)
         {
-            auto normal = cross(Vec3(v_1.position) - Vec3(v_0.position), Vec3(v_2.position) - Vec3(v_0.position));
+            auto normal = cross(math::Vec3(v_1.position) - math::Vec3(v_0.position), math::Vec3(v_2.position) - math::Vec3(v_0.position));
             if(normal.z < 0.0f) return;
         }
 
-        Recti bbox(v_0.position, v_1.position, v_2.position);
+        math::Recti bbox(v_0.position, v_1.position, v_2.position);
         bbox.clamp(options.viewport, 0, -1);
 
         for(int x = bbox.min.x; x <= bbox.max.x; x++)
         {
             for(int y = bbox.min.y; y <= bbox.max.y; y++)
             {
-                Vec2 fragCoord = Vec2(x + 0.5f, y + 0.5f);
-                auto bc = barycentric(Vec2(v_0.position), Vec2(v_1.position), Vec2(v_2.position), fragCoord);
+                math::Vec2 fragCoord = math::Vec2(x + 0.5f, y + 0.5f);
+                auto bc = barycentric(math::Vec2(v_0.position), math::Vec2(v_1.position), math::Vec2(v_2.position), fragCoord);
                 if(bc.x < 0 || bc.y < 0 || bc.z < 0 || std::isnan(bc.x)) continue;
 
                 /* linear interpolate in screen space */
@@ -208,7 +211,7 @@ private:
                 /* call fragment shader, TODO: unecessary complicated to have two different function definitions? */
                 if constexpr (std::is_same_v<Framebuffer<Targets...>, DefaultFramebuffer>)
                 {
-                    Vec4 fragColor(0, 0, 0, 0);
+                    math::Vec4 fragColor(0, 0, 0, 0);
                     program.m_fragShader(program.m_uniforms, inter, fragColor);
 
                     fb.color()(x, y) = RGBA8( max( min(fragColor, 1.0), 0.0) * 255 );
@@ -244,29 +247,29 @@ private:
     void draw_line(const Varying& v_0, const Varying& v_1, const Program<Vertex, Varying, Uniforms, Framebuffer<Targets...>>& program, Framebuffer<Targets...>& fb, const Options& options)
     {
         /* clamp to viewport */
-        auto v0 = clamp(options.viewport, Vec2(v_0.position), 0.0f, -1.0f);
-        auto v1 = clamp(options.viewport, Vec2(v_1.position), 0.0f, -1.0f);
+        auto v0 = clamp(options.viewport, math::Vec2(v_0.position), 0.0f, -1.0f);
+        auto v1 = clamp(options.viewport, math::Vec2(v_1.position), 0.0f, -1.0f);
 
         /* rasterize line and iterate fragments */
-        Vec2i r0 = v0;
-        Vec2i r1 = v1;
+        math::Vec2i r0 = v0;
+        math::Vec2i r1 = v1;
 
-        Vec2i step( r0.x < r1.x ? 1 : -1, r0.y < r1.y ? 1 : -1 );
-        Vec2i delta( std::abs(r1.x - r0.x), -std::abs(r1.y - r0.y) );
+        math::Vec2i step( r0.x < r1.x ? 1 : -1, r0.y < r1.y ? 1 : -1 );
+        math::Vec2i delta( std::abs(r1.x - r0.x), -std::abs(r1.y - r0.y) );
         int err = delta.x + delta.y;
         int err2 = 2 * err;
 
         for(;r0 != r1; err2 = 2 * err)
         {
-            Vec2i pixelCoord = r0;
+            math::Vec2i pixelCoord = r0;
 
             /* step to next fragment position */
             if(err2 > delta.y) { err += delta.y; r0.x += step.x; }
             if(err2 < delta.x) { err += delta.x; r0.y += step.y; }
 
             /* linear interpolate in screen space */
-            Vec2 fragCoord = Vec2(pixelCoord.x + 0.5f, pixelCoord.y + 0.5f);
-            auto ic = linear(Vec2(v_0.position), Vec2(v_1.position), fragCoord);
+            math::Vec2 fragCoord = math::Vec2(pixelCoord.x + 0.5f, pixelCoord.y + 0.5f);
+            auto ic = linear(math::Vec2(v_0.position), math::Vec2(v_1.position), fragCoord);
 
             float w = ic.x * v_0.position.w + ic.y * v_1.position.w;
             float z = ic.x * v_0.position.z + ic.y * v_1.position.z;
@@ -294,7 +297,7 @@ private:
             /* call fragment shader, TODO: unecessary complicated to have two different function definitions? */
             if constexpr (std::is_same_v<Framebuffer<Targets...>, DefaultFramebuffer>)
             {
-                Vec4 fragColor(0, 0, 0, 0);
+                math::Vec4 fragColor(0, 0, 0, 0);
                 program.m_fragShader(program.m_uniforms, inter, fragColor);
 
                 fb.color()(pixelCoord.x, pixelCoord.y) = RGBA8( max( min(fragColor, 1.0), 0.0) * 255 );
@@ -308,7 +311,7 @@ private:
     }
 
     template<typename Varying>
-    void interpolate_frag_data(const Vec3& bc, const Varying& v_0, const Varying& v_1, const Varying& v_2, Varying& result)
+    void interpolate_frag_data(const math::Vec3& bc, const Varying& v_0, const Varying& v_1, const Varying& v_2, Varying& result)
     {
         #define VARYING(...) decltype(std::tie( __VA_ARGS__ )) _reflect = std::tie( __VA_ARGS__ );
 
@@ -321,7 +324,7 @@ private:
     }
 
     template<typename Varying>
-    void interpolate_frag_data(const Vec2& ic, const Varying& v_0, const Varying& v_1, Varying& result)
+    void interpolate_frag_data(const math::Vec2& ic, const Varying& v_0, const Varying& v_1, Varying& result)
     {
         auto interpolate = [ic](const auto& x0, const auto& x1, auto& res)
         {
@@ -335,3 +338,5 @@ private:
     DefaultFramebuffer m_framebuffer;
     Options m_options;
 };
+
+}

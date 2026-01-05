@@ -6,7 +6,7 @@
 #include <tuple>
 #include <type_traits>
 
-namespace detail
+namespace software_rasterizer::detail
 {
 
 template <typename T, typename Func, std::size_t... Is>

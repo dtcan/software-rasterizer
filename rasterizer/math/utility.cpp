@@ -1,5 +1,8 @@
 #include "utility.h"
 
+namespace software_rasterizer::math
+{
+
 inline constexpr float PI = 3.1415926535897932384626433832795;
 
 Vec2 equirectangularUV(const Vec3& dir)
@@ -14,4 +17,6 @@ Vec3 equirectangulatDir(Vec2 pixel, Vec2i size)
     float phi = ( pixel.x / size.x * 2.0 * PI ) - PI;
     float theta = ( pixel.y / size.y * PI) - 0.5 * PI;
     return Vec3{std::cos(theta) * std::sin(phi), std::sin(theta), std::cos(theta) * std::cos(phi)};
+}
+
 }

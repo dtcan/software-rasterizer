@@ -2,6 +2,9 @@
 
 #include <vector>
 
+namespace software_rasterizer
+{
+
 enum class ePrimitive
 {
     TRIANGLES,
@@ -21,3 +24,5 @@ struct BufferIndexed : public Buffer<Vert>
 {
     std::vector<Ind> indices;
 };
+
+}

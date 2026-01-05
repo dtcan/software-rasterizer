@@ -5,6 +5,9 @@
 
 #include <iostream>
 
+namespace software_rasterizer::math
+{
+
 template<typename T>
 struct Vector4
 {
@@ -290,3 +293,5 @@ Vector4<T> max(const Vector4<T>& a, const Vector4<T>& b)
 typedef Vector4<int> Vec4i;
 typedef Vector4<float> Vec4;
 typedef Vector4<std::uint8_t> Vec4u_8;
+
+}
