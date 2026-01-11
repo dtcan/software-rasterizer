@@ -169,7 +169,7 @@ private:
         if(options.culling)
         {
             auto normal = cross(math::Vec3(v_1.position) - math::Vec3(v_0.position), math::Vec3(v_2.position) - math::Vec3(v_0.position));
-            if(normal.z < 0.0f) return;
+            if(normal.z > 0.0f) return;
         }
 
         math::Recti bbox(v_0.position, v_1.position, v_2.position);
