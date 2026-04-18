@@ -52,7 +52,7 @@ public:
 public:
     const Texture<T>* m_texture;
 
-    friend T texture<>(const Sampler<T>& sampler, const Vec2& uv);
+    friend T texture<>(const Sampler<T>& sampler, const math::Vec2& uv);
 };
 
 template<typename T>
@@ -76,7 +76,7 @@ T sample_texture(const TextureStorage<T>& textureStorage, const math::Vec2& uv, 
 
     if(filter == eFilter::NEAREST || filter == eFilter::LINEAR_MIPMAP_NEAREST)
     {
-        Vec2i coord(std::round(proj_uv.x * width - 0.5f), std::round(proj_uv.y * height - 0.5f) );
+        math::Vec2i coord(std::round(proj_uv.x * width - 0.5f), std::round(proj_uv.y * height - 0.5f) );
         coord.x = std::clamp(coord.x, 0, width - 1);
         coord.y = std::clamp(coord.y, 0, height - 1);
 
@@ -85,9 +85,9 @@ T sample_texture(const TextureStorage<T>& textureStorage, const math::Vec2& uv, 
     else if(filter == eFilter::LINEAR || filter == eFilter::NEAREST_MIPMAP_LINEAR)
     {
         /* TODO: apply wrapping for interpolation coords  */
-        Vec2 coord = Vec2(proj_uv.x * width - 0.5f, proj_uv.y * height - 0.5f);
-        Vec2 lower(int(coord.x), int(coord.y));
-        Vec2 upper(lower.x + 1, lower.y + 1);
+        math::Vec2 coord = math::Vec2(proj_uv.x * width - 0.5f, proj_uv.y * height - 0.5f);
+        math::Vec2 lower(int(coord.x), int(coord.y));
+        math::Vec2 upper(lower.x + 1, lower.y + 1);
 
         upper.x = std::clamp<float>(upper.x, 0, width - 1);
         upper.y = std::clamp<float>(upper.y, 0, height - 1);
